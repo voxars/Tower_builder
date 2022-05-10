@@ -1,9 +1,6 @@
 #include <Gamebuino-Meta.h>
 
 
-//Variables constantes
-int score = 0;
-
 //brique de départ
 int brique_x=14;
 int brique_y = 60;
@@ -11,17 +8,26 @@ int brique_largeur = 50;
 int brique_hauteur = 3;
 
 //nouvelle brique
-int brique
+float brique_actuelle_x=0;
+int brique_actuelle_y = 0;
+int brique_actuelle_largeur = 0;
+int brique_actuelle_hauteur = 0;
+float vitesse = 0.2;
 
+//tableau des scores
+int score = 0;
+int scoreTab[10];
 
+//mode de vue
 byte mode = 0;
 
 
-
 void setup() {
+
   gb.begin();
 
 }
+
 void loop() {
   while (!gb.update());
   gb.display.clear();
@@ -63,8 +69,29 @@ void affichageJeux(){
   gb.display.print(score);
 
   if (gb.buttons.released(BUTTON_B)) {
-    mode = 0; // GAMEPLAY // 
+    mode = 0; //retour au menu
   }
+
+  //brique jouable
+  //on prend les coordonnées de la brique precedente
+  brique_actuelle_x = 65;
+  brique_actuelle_y = brique_y-3;
+  brique_actuelle_largeur = brique_largeur;
+  brique_actuelle_hauteur = brique_hauteur;
+
+  //on déplace la brique actuelle
+  if(brique_actuelle_x >= 64){
+    vitesse = 0.2;
+  }
+  if(brique_actuelle_x <= 0){
+    vitesse = -0.2;
+  }
+  brique_actuelle_x += vitesse;
+  
+
+  gb.display.setColor(248, 250, 255);
+
+  gb.display.fillRect(brique_actuelle_x,brique_actuelle_y,brique_actuelle_largeur,brique_actuelle_hauteur);
 
 }
 
