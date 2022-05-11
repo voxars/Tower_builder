@@ -202,7 +202,7 @@ void affichageJeux(){
  }
 
  if (fin_partie == true){
-    if ((score >= (tab_score[5]))&& keyboard_reset == true) {
+    if ((score >= (tab_score[4]))&& keyboard_reset == true) {
     gb.gui.keyboard("Entre ton nom!",player_name);       
     for(int i = 0; i < 5; i++){
       if(score>= tab_score[i]){
@@ -218,7 +218,7 @@ void affichageJeux(){
         }
       }
     }
-    else if(score >= tab_score[5]){
+    else if(score >= tab_score[4]){
       for(int i = 0; i < 5; i++){
       if(score>= tab_score[i]){
         for (int j = 5; j >= i; j--){
