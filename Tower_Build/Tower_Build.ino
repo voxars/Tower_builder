@@ -5,20 +5,25 @@
 int score = 0;
 
 //brique de départ
-int brique_x=14;
+int brique_x = 14;
 int brique_y = 60;
 int brique_largeur = 50;
 int brique_hauteur = 3;
 
+//tableau de brique
+int tab_brique[7][2] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
+
 //nouvelle brique
-int brique
+int brique;
 
 
-byte mode = 0;
+int mode = 0;
 
 
 
 void setup() {
+  tab_brique[0][0] = brique_x;
+  tab_brique[0][1] = brique_largeur;
   gb.begin();
 
 }
@@ -54,8 +59,35 @@ void affichageJeux(){
   gb.display.fillRect(14, 0, 2, 63);
   gb.display.fillRect(64, 0, 2, 63);
 
-  //premiere brique
-  gb.display.fillRect(brique_x,brique_y,brique_largeur,brique_hauteur);
+  // Gestion du clic sur A
+  if (gb.buttons.pressed(BUTTON_A)){
+  /*******************************************
+  Mettre ici la code de posage de brique et du score ainsi que le cas de la défaite
+  *******************************************/
+
+  //si on a pas encore atteint la 7ème brique on fait monter la brique à poser
+  if (tab_brique[7][1] == 0){
+    brique_y -= 3;
+  }
+  //sinon on fait tourner les valeurs du tableau pour faire de la place pour la suivante
+  else{
+    for (int i = 1; i < 7; i++){
+      tab_brique[i-1][0] = tab_brique[i][0];
+      tab_brique[i-1][1] = tab_brique[i][1];
+    }
+    //on vide la prochaine case pour la nouvelle brique
+    tab_brique[7][0] = 0;
+    tab_brique[7][1] = 0;
+  }
+ }
+
+  //affichage de la pile de brique
+  for(int i = 0; i < 7; i++){
+    //si la brique à une largeur de 0 c'est quelle n'existe pas donc on ne l'afiche pas
+    if (tab_brique[i][1] != 0){
+      gb.display.fillRect(tab_brique[0][0],brique_y,tab_brique[0][1],brique_hauteur);
+    }
+  }
 
   //score
   gb.display.setCursor(25, 5);
@@ -105,4 +137,5 @@ void affichageScore(){
     mode = 0; // GAMEPLAY // 
   }
 }
+
 
