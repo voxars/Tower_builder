@@ -1,5 +1,9 @@
 #include <Gamebuino-Meta.h>
 
+//RGB
+int red = 255;
+int green = 0;
+int blue = 0;
 
 //Variables constantes
 int score = 0;
@@ -59,8 +63,31 @@ void loop() {
 void affichageJeux(){
   gb.display.clear();
 
+  //RGB
+ Color rgb1 = gb.createColor(red, green, blue);
+ Color rgb2 = gb.createColor(blue, red, green);
+ if (red == 255 && green < 255 && blue == 0){
+  green++; 
+ }
+ if (red != 0 && green == 255 && blue == 0){
+  red--; 
+ }
+ if (red == 0 && green == 255 && blue < 255){
+  blue++; 
+ }
+ if (red == 0 && green != 0 && blue == 255){
+  green--; 
+ }
+ if (red < 255 && green == 0 && blue == 255){
+  red++; 
+ }
+ if (red == 255 && green == 0 && blue != 0){
+  blue--; 
+ }
+ gb.lights.fill(rgb1);
+
   //zone des briques
-  gb.display.setColor(248, 250, 255);
+  gb.display.setColor(rgb1);
   gb.display.fillRect(14, 0, 2, 63);
   gb.display.fillRect(64, 0, 2, 63);
 
@@ -168,6 +195,7 @@ void affichageJeux(){
  }
 
  if (fin_partie == true){
+  gb.display.setColor(rgb2);
   gb.display.setCursor(22, 15);
   gb.display.print("GAME OVER");
   gb.display.setCursor(25, 22);
@@ -177,6 +205,7 @@ void affichageJeux(){
  }
 
   //affichage de la brique qui bouge
+  gb.display.setColor(rgb1);
   gb.display.fillRect(brique_x, brique_y,brique_largeur,brique_hauteur);
   //affichage de la pile de brique
   for(int i = 0; i < 7; i++){
@@ -187,6 +216,7 @@ void affichageJeux(){
   }
 
   //score
+  gb.display.setColor(rgb2);
   gb.display.setCursor(25, 5);
   gb.display.print("SCORE: ");
   gb.display.print(score);
