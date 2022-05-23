@@ -3,7 +3,7 @@ Menu/Jeux/Highscore
 
 Difficultés rencontrées : 
 
--Gestion des écrans pour le scoreboard
+-Gestion des écrans pour le scoreboard  
 -Gestion du clavier en fin de première partie
 
 
